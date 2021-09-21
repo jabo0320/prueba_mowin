@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 
 
 export class ComicsComponent implements OnInit {
-
+  // array de objetos dinámicos que contienen los registros de los comics
   comics = [
     {
       "id": 1,
