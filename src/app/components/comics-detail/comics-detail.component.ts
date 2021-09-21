@@ -20,7 +20,14 @@ export class ComicsDetailComponent implements OnInit {
     this.descripcion = this._Activatedroute.snapshot.paramMap.get("descripcion")!.toString();
     this.imgUrl = this._Activatedroute.snapshot.paramMap.get("imgUrl")!.toString();
 
+    console.log("img", this.imgUrl);
     
+
+    
+  }
+
+  back(){
+    history.back();
   }
 
 }

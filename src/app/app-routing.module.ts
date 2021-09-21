@@ -7,7 +7,7 @@ import { PeliculasComponent } from './components/peliculas/peliculas.component';
 const routes: Routes = [
   { path: "comics", component: ComicsComponent },
   { path: "peliculas", component: PeliculasComponent },
-  // { path: 'comicsDetail/:id/:titulo/:descripcion/:imgUrl', component: ComicsDetailComponent }
+  { path: 'comicsDetail/:id/:titulo/:descripcion/:imgUrl', component: ComicsDetailComponent }
 ];
 
 @NgModule({
