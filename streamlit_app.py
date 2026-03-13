@@ -10,7 +10,7 @@ st.set_page_config(page_title="Video Game Sales Dashboard", layout="wide")
 def load_data():
     # Reemplaza 'tu_ruta/video-games-sales-analysis-and-visualization.csv' con tu ubicación
     DATA_PATH = "video-games-sales-analysis-and-visualization.csv"
-    df = pd.read_csv(https://www.kaggle.com/code/snanilim/video-games-sales-analysis-and-visualization?scriptVersionId=37623110&cellId=1)
+    df = pd.read_csv("C:\Users\JABO\Downloads\video-games-sales-analysis-and-visualization.ipynb")
     return df
 
 try:
