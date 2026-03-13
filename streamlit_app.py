@@ -1,72 +1,179 @@
-import streamlit as st
-import pandas as pd
-import plotly.express as px
+# ⚡ Dashboard Sector Minero Energético Colombia
 
-# Configuración de la página
-st.set_page_config(page_title="Video Game Sales Dashboard", layout="wide")
+> Panel de control interactivo para el análisis de proyectos energéticos y mineros en Colombia.
 
-# --- CARGA DE DATOS ---
-@st.cache_data
-def load_data():
-    # Reemplaza 'tu_ruta/video-games-sales-analysis-and-visualization.csv' con tu ubicación
-    DATA_PATH = "vgsales.csv"
-    df = pd.read_csv(r"C:/Users/JABO/Downloads/vgsales.csv")
-    return df
+<p align="center">
+  <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white" alt="Streamlit">
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" alt="Pandas">
+  <img src="https://img.shields.io/badge/Plotly-3F4F75?style=for-the-badge&logo=plotly&logoColor=white" alt="Plotly">
+  <img src="https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite">
+</p>
 
-try:
-    df = load_data()
-except FileNotFoundError:
-    st.error("No se encontró el archivo. Por favor, verifica la ruta en el código.")
-    st.stop()
+<p align="center">
+  <strong>Desarrollado por 
+    <a href="https://github.com/FeibertGuzman/streamlit2.git">Feibert Guzmán</a>
+  </strong>
+</p>
 
-# --- MENÚ LATERAL ---
-st.sidebar.title("🎮 Navegación")
-menu = st.sidebar.radio(
-    "Selecciona una vista:",
-    ["Resumen General", "Análisis por Categoría", "Buscador de Títulos"]
-)
+---
 
-# --- VISTA: RESUMEN GENERAL ---
-if menu == "Resumen General":
-    st.title("📊 Análisis Global de Ventas")
-    
-    # Métricas principales
-    col1, col2, col3 = st.columns(3)
-    col1.metric("Ventas Totales", f"{df['Global_Sales'].sum():.2f}M")
-    col2.metric("Lanzamientos", len(df))
-    col3.metric("Promedio Ventas", f"{df['Global_Sales'].mean():.2f}M")
+## 🚀 Inicio Rápido
 
-    # Gráfico de ventas por año
-    st.subheader("Evolución Histórica de Ventas")
-    sales_year = df.groupby('Year')['Global_Sales'].sum().reset_index()
-    fig_line = px.line(sales_year, x='Year', y='Global_Sales', title="Ventas Globales por Año")
-    st.plotly_chart(fig_line, use_container_width=True)
+```bash
+# 1. Clonar repositorio
+git clone https://github.com/FeibertGuzman/streamlit2.git
+cd streamlit2
 
-# --- VISTA: ANÁLISIS POR CATEGORÍA ---
-elif menu == "Análisis por Categoría":
-    st.title("📂 Análisis por Plataforma y Género")
-    
-    col_a, col_b = st.columns(2)
-    
-    with col_a:
-        st.subheader("Top 10 Plataformas")
-        top_platforms = df.groupby('Platform')['Global_Sales'].sum().nlargest(10).reset_index()
-        fig_plat = px.bar(top_platforms, x='Platform', y='Global_Sales', color='Global_Sales')
-        st.plotly_chart(fig_plat, use_container_width=True)
-        
-    with col_b:
-        st.subheader("Distribución por Género")
-        fig_pie = px.pie(df, values='Global_Sales', names='Genre', hole=0.4)
-        st.plotly_chart(fig_pie, use_container_width=True)
+# 2. Instalar dependencias
+pip install -r requirements.txt
 
-# --- VISTA: BUSCADOR ---
-elif menu == "Buscador de Títulos":
-    st.title("🔍 Explorador de Datos")
-    
-    search = st.text_input("Busca un juego por nombre:")
-    if search:
-        filtered_df = df[df['Name'].str.contains(search, case=False, na=False)]
-        st.write(f"Resultados encontrados: {len(filtered_df)}")
-        st.dataframe(filtered_df)
-    else:
-        st.dataframe(df.head(100))
+# 3. Inicializar base de datos
+python init_db.py
+
+# 4. Ejecutar aplicación
+streamlit run app.py
+
+🌐 La app estará disponible en: http://localhost:8501
+📊 Módulos del Dashboard
+Módulo
+Descripción
+🏠 Inicio
+KPIs generales, distribución energética y fuentes de inversión
+🏗️ Proyectos
+Listado y detalles de proyectos por ubicación y tipo de energía
+📉 Eficiencia
+Series temporales de generación, costos e indicadores económicos
+💰 Inversiones
+Análisis de montos y fuentes de financiamiento
+🏢 Empresas
+Actores del ecosistema y su participación por proyecto
+🗄️ Esquema de Datos
+12345678910
+📦 SectorMineroEnergeticoColombia.db
+ ├── tipos_energia          # Catálogo: Solar, Eólica, H2, Biomasa, Geotérmica
+ ├── proyectos              # 5 proyectos piloto con metadata geoespacial
+ ├── eficiencia_energetica  # 50 registros diarios: kWh, costos, KPIs
+ ├── inversiones            # Fuentes: Gobierno, Privado, ONG
+ ├── empresas               # Operadores por proyecto
+ ├── comunidades_energeticas # Beneficiarios locales
+ ├── minerales              # Recursos estratégicos asociados
+ ├── estu
+🛠️ Stack Tecnológico
+Frontend: Streamlit + Plotly (visualizaciones interactivas)
+Backend: Python 3.8+ + SQLite3
+Data Engineering: Pandas para ETL y análisis
+Estilo: CSS personalizado para UI profesional y responsive
+📁 Estructura del Proyecto
+123456
+sector_minero_energy/
+├── app.py                   # Dashboard principal
+├── init_db.py               # Script de inicialización de datos
+├── requirements.txt         # Dependencias Python
+├── README.md                # Este archivo
+└── SectorMineroEnergeticoColombia.sql  # Script SQL original
+⚡ Notas Técnicas
+Los datos en init_db.py están sanitizados para corregir inconsistencias del dump SQL original (espacios en números, fechas mal formadas).
+La conexión a la BD usa @st.cache_data para optimizar rendimiento.
+Diseño mobile-first: compatible con escritorio y dispositivos móviles.
+<p align="center">
+<sub>© 2024 • Dashboard Sector Minero Energético Colombia •
+<a href="https://github.com/FeibertGuzman/streamlit2.git">GitHub Repo</a></sub>
+</p>
+```
+
+✅ Mejoras aplicadas:
+Antes
+Ahora
+Texto plano extenso
+Badges visuales + tablas + código embebido
+Instrucciones dispersas
+Sección "Inicio Rápido" con 4 pasos claros
+Descripción genérica
+Tabla de módulos con iconos y propósitos
+Sin esquema de datos
+Diagrama visual de la estructura de la BD
+Footer simple
+Badges + enlace GitHub + copyright profesional
+💡 Tip: Puedes personalizar los badges adicionales según necesites:
+markdown
+12
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-1.0-blue?style=for-the-badge)
+¿Te gustaría que agregue una sección de "Próximas Mejoras" o un diagrama de arquitectura en el README? 🎨
+pero porfa solo un archivo todo tipo markdown para copiar y pegar 
+
+Pensamiento completado
+markdown
+1234567891011121314151617181920212223242526272829303132333435
+# ⚡ Dashboard Sector Minero Energético Colombia
+
+> Panel de control interactivo para el análisis de proyectos energéticos y mineros en Colombia.
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white" alt="Streamlit">
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" alt="Pandas">
+  <img src="https://img.shields.io/badge/Plotly-3F4F75?style=for-the-badge&logo=plotly&logoColor=white" alt="Plotly">
+  <img src="https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite">
+</p>
+
+<p align="center">
+  <strong>Desarrollado por 
+    <a href="https://github.com/FeibertGuzman/streamlit2.git">Feibert Guzmán</a>
+  </strong>
+</p>
+
+---
+
+
+## 🌐 La app estará disponible en: http://localhost:8501
+### 📊 Módulos del Dashboard
+Módulo
+Descripción
+## 🏠 Inicio
+KPIs generales, distribución energética y fuentes de inversión
+## 🏗️ Proyectos
+Listado y detalles de proyectos por ubicación y tipo de energía
+## 📉 Eficiencia
+Series temporales de generación, costos e indicadores económicos
+## 💰 Inversiones
+Análisis de montos y fuentes de financiamiento
+## 🏢 Empresas
+Actores del ecosistema y su participación por proyecto
+## 🗄️ Esquema de Datos
+
+### 📦 SectorMineroEnergeticoColombia.db
+ ├── tipos_energia          # Catálogo: Solar, Eólica, H2, Biomasa, Geotérmica
+ ├── proyectos              # 5 proyectos piloto con metadata geoespacial
+ ├── eficiencia_energetica  # 50 registros diarios: kWh, costos, KPIs
+ ├── inversiones            # Fuentes: Gobierno, Privado, ONG
+ ├── empresas               # Operadores por proyecto
+ ├── comunidades_energeticas # Beneficiarios locales
+ ├── minerales              # Recursos estratégicos asociados
+ ├── estu
+
+## 🛠️ Stack Tecnológico
+Frontend: Streamlit + Plotly (visualizaciones interactivas)
+Backend: Python 3.8+ + SQLite3
+Data Engineering: Pandas para ETL y análisis
+Estilo: CSS personalizado para UI profesional y responsive
+
+## 📁 Estructura del Proyecto
+
+sector_minero_energy/
+├── app.py                   # Dashboard principal
+├── init_db.py               # Script de inicialización de datos
+├── requirements.txt         # Dependencias Python
+├── README.md                # Este archivo
+└── SectorMineroEnergeticoColombia.sql  # Script SQL original
+
+## ⚡ Notas Técnicas
+
+-> Los datos en init_db.py están sanitizados para corregir inconsistencias del dump SQL original (espacios en números, fechas mal formadas).
+La conexión a la BD usa @st.cache_data para optimizar rendimiento.
+Diseño mobile-first: compatible con escritorio y dispositivos móviles.
+<p align="center">
+<sub>© 2024 • Dashboard Sector Minero Energético Colombia •
+<a href="https://github.com/FeibertGuzman/streamlit2.git">GitHub Repo</a></sub>
+</p>
