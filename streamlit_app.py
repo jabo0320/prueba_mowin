@@ -1,5 +1,12 @@
 # ⚡ Dashboard Sector Minero Energético Colombia
+import streamlit as st
+import pandas as pd
 
+# Si quieres que aparezca como título en la web:
+st.title("Panel de control interactivo para el análisis de proyectos energéticos y mineros en Colombia")
+
+# O si solo es un comentario para ti en el código:
+# Panel de control interactivo para el análisis de proyectos energéticos y mineros en Colombia.
 > Panel de control interactivo para el análisis de proyectos energéticos y mineros en Colombia.
 
 <p align="center">
