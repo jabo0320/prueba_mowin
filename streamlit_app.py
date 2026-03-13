@@ -10,7 +10,7 @@ st.set_page_config(page_title="Video Game Sales Dashboard", layout="wide")
 def load_data():
     # Reemplaza 'tu_ruta/video-games-sales-analysis-and-visualization.csv' con tu ubicación
     DATA_PATH = "vgsales.csv"
-    df = pd.read_csv("C:\Users\JABO\Downloads\vgsales.csv")
+    df = pd.read_csv(r"C:/Users/JABO/Downloads/vgsales.csv")
     return df
 
 try:
